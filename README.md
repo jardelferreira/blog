@@ -1,7 +1,7 @@
 <h1>API Básica de um Blog</h1>
 <br>
 <h3>Rotas</h3>
-
+<p>Após configurar o Laravel, se desejar pode executar o comando <i>php artisan migrate --seed<i>, para popular a DB</p>
 <table class="table">
     <thead>
         <tr>
