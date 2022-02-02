@@ -109,9 +109,10 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy(int $comment)
     {
-        if (!$comment) {
+        $comment = Comment::where('id',$comment);
+        if (!$comment->count()) {
             return \response()->json([
                 'message' => "Comment not found"
             ],404);

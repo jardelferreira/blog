@@ -28,7 +28,7 @@ class ArticleRequest extends FormRequest
         return [
             'title' => 'required|min:5',
             'content' => 'required|min:25',
-            'author_id' => 'required|integer'
+            'author_id' => 'required|integer|exists:authors,id'
         ];
     }
 

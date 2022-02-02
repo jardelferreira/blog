@@ -40,7 +40,7 @@ class AuthorController extends Controller
         $author->create($request->all());
 
         return \response()->json([
-            'message' => 'Authorr created successfuly'
+            'message' => 'Author created successfuly'
         ],200);
     }
 
@@ -79,18 +79,21 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AuthorRequest $request, $author)
+    public function update(AuthorRequest $request,int $author)
     {
         $author = Author::find($author);
-        if (!$author) {
+        if (!$author->id) {
             return response()->json([
                 'message' => "Author not found"
-            ],422);
+            ],404);
         }
 
         $author->update($request->all());
 
-        return $request;
+        return \response()->json([
+            'message' => "Author updated successfuly",
+            'data' => Author::find($author)
+        ]);
     }
 
     /**
@@ -105,7 +108,7 @@ class AuthorController extends Controller
         if (!$author) {
             return response()->json([
                 'message' => "Author not found"
-            ],422);
+            ],404);
         }
         $author->delete();
         return \response()->json([
@@ -113,13 +116,16 @@ class AuthorController extends Controller
         ],200);
     }
 
-    public function articles(Author $author)
+    public function articles(int $author)
     {
-        if (!$author->id) {
+        $author = Author::where('id',$author);
+        
+        if (!$author->count()) {
             return response()->json([
                 'message' => "Author not found"
-            ],422);
+            ],404);
         }
-        return $author->articles()->get();
+
+        return $author->with('articles')->get();
     }
 }

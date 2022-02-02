@@ -24,10 +24,9 @@ Route::prefix('articles')->group(function(){
     Route::get('/',[ArticleController::class,'index']);
     Route::get('/{article}',[ArticleController::class,'show']);
     Route::get('/{article}/comments',[ArticleController::class,'comments']);
-    Route::post('',[ArticleController::class,'store']);
+    Route::post('/',[ArticleController::class,'store']);
     Route::post('/{article}/comment',[CommentController::class,'store']);
-    Route::put('/{article}/author/{author}',[ArticleController::class,'update']);
-    //O parâmetro autor pode ser passado via autenticação de usuário
+    Route::put('/{article}',[ArticleController::class,'update']);
     Route::delete('/{article}/author/{author}',[ArticleController::class,'destroy']);
 
 });

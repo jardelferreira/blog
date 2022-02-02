@@ -18,7 +18,7 @@ class ArticleController extends Controller
      */
     public function index(Article $articles)
     {
-        return $articles->paginate(5);
+        return $articles->get();
     }
 
     /**
@@ -52,7 +52,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($article)
+    public function show(int $article)
     {
         $article = Article::find($article);
         if (!$article) {
@@ -81,16 +81,16 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ArticleRequest $request,int $article,int $author)
+    public function update(ArticleRequest $request,int $article)
     {
         $article = Article::find($article);
         if (!$article) {
             return response()->json([
                 'message' => "Article not found"
             ],404);
-        }
+        } 
    
-        if ($article->author_id !== $author) {
+        if ($article->author_id !== $request->author_id) {
             return response()->json([
                 'message' => "Forbidden, you don't is authored this article"
             ],403);
@@ -119,7 +119,7 @@ class ArticleController extends Controller
         if (!$article) {
             return response()->json([
                 'message' => "Article not found"
-            ],422);
+            ],404);
         }
         if ($author->id != $article->author_id) {
             return \response()->json([
